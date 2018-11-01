@@ -3,7 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Welcome {
+public class WelcomeFrame {
 
 	JFrame Welcome_frame;
 
@@ -14,7 +14,7 @@ public class Welcome {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Welcome window = new Welcome();
+					WelcomeFrame window = new WelcomeFrame();
 					window.Welcome_frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -26,7 +26,7 @@ public class Welcome {
 	/**
 	 * Create the application.
 	 */
-	public Welcome() {
+	public WelcomeFrame() {
 		initialize();
 	}
 
@@ -37,10 +37,10 @@ public class Welcome {
 		Welcome_frame = new JFrame();
 		Welcome_frame.getContentPane().setBackground(new Color(250, 235, 215));
 		Welcome_frame.getContentPane().setForeground(new Color(0, 255, 255));
-		Welcome_frame.setBounds(10, 10, 900, 700);
+		Welcome_frame.setBounds(100, 100, 900, 700);
 		Welcome_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Welcome_frame.getContentPane().setLayout(null);
-		
+		Welcome_frame.setTitle("BookMyHotel");
 		JLabel label = new JLabel("");
 		Image img2=new ImageIcon(this.getClass().getResource("/Hotel3.jpg")).getImage();
 		label.setIcon(new ImageIcon(img2));
@@ -63,7 +63,7 @@ public class Welcome {
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Login obj =new Login();
+				LoginFrame obj =new LoginFrame();
 				obj.setVisible(true);
 				Welcome_frame.dispose();
 			}
@@ -82,7 +82,7 @@ public class Welcome {
 		JButton btnNewButton_1 = new JButton("Register");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Register obj=new Register();
+				RegisterFrame obj=new RegisterFrame();
 				obj.frame.setVisible(true);
 				Welcome_frame.dispose();
 			}
