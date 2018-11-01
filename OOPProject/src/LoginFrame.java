@@ -56,6 +56,7 @@ public class LoginFrame extends JFrame {
 		
 		textFieldPassword = new JPasswordField();
 		textFieldPassword.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void keyPressed(KeyEvent ke)
 			{
