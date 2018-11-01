@@ -108,7 +108,7 @@ public class LoginFrame extends JFrame {
 		btnLogin.setBounds(582, 419, 101, 30);
 		contentPane.add(btnLogin);
 		
-		JLabel UserNameLabel = new JLabel("UserName");
+		JLabel UserNameLabel = new JLabel("Username");
 		UserNameLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
 		UserNameLabel.setBounds(443, 283, 101, 30);
 		contentPane.add(UserNameLabel);
@@ -134,12 +134,13 @@ public class LoginFrame extends JFrame {
 		
 		JLabel label_1 = new JLabel("-Your Stay our Responsibility");
 		label_1.setForeground(new Color(102, 0, 51));
-		label_1.setFont(new Font("Consolas", Font.PLAIN, 23));
-		label_1.setBounds(290, 11, 409, 65);
+		label_1.setFont(new Font("Consolas", Font.ITALIC, 23));
+		label_1.setBounds(290, 11, 399, 65);
 		contentPane.add(label_1);
 		
 		
 		JLabel Home_label = new JLabel("");
+		Home_label.setToolTipText("Back to Home");
 		Image img4=new ImageIcon(this.getClass().getResource("/Home icon.png")).getImage();
 		Home_label.setIcon(new ImageIcon(img4));
 		Home_label.setBounds(834, 11, 40, 54);

@@ -60,7 +60,7 @@ public class RegisterFrame
 		JLabel label_1 = new JLabel("-Your Stay our Responsibility");
 		label_1.setBounds(277, 11, 386, 65);
 		label_1.setForeground(new Color(102, 0, 51));
-		label_1.setFont(new Font("Consolas", Font.PLAIN, 23));
+		label_1.setFont(new Font("Consolas", Font.ITALIC, 23));
 		frame.getContentPane().add(label_1);
 		
 		JLabel Name_Label = new JLabel("Name*");
@@ -129,7 +129,7 @@ public class RegisterFrame
 		
 		
 		JButton btnNewButton = new JButton("Submit");
-		btnNewButton.setBounds(366, 608, 89, 42);
+		btnNewButton.setBounds(363, 598, 89, 42);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkRegistration(frame);
@@ -141,7 +141,7 @@ public class RegisterFrame
 		frame.getContentPane().add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("All fields marked * compulsary");
-		lblNewLabel.setBounds(490, 555, 240, 14);
+		lblNewLabel.setBounds(490, 565, 240, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
 		RePass_Field = new JPasswordField();
@@ -160,6 +160,7 @@ public class RegisterFrame
 		frame.getContentPane().add(label_2);
 		
 		JLabel Home_label = new JLabel("");
+		Home_label.setToolTipText("Back to Home");
 		Home_label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
