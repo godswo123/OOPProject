@@ -3,19 +3,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.JobAttributes;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
@@ -144,6 +136,7 @@ public class RegisterFrame extends JFrame {
 		
 		JButton button = new JButton("Submit");
 		button.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) 
 			{
 				if(!User.checkAvailability(textFieldUsername.getText()))
