@@ -15,8 +15,11 @@ public class RegisterFrame
 	private JTextField Email_Field;
 	private JTextField UName_Field;
 	private JPasswordField FirstPass_Field;
-	Connection conn;
+	private Image ok;
+	private Image error;
+	private JLabel checklbl;
 	private JPasswordField RePass_Field;
+	private String uname = "";
 	/**
 	 * Launch the application.
 	 */
@@ -119,6 +122,25 @@ public class RegisterFrame
 		Email_Field.setColumns(10);
 		
 		UName_Field = new JTextField();
+		UName_Field.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent ke) 
+			{
+				if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE&&uname.length()>0)
+					uname = uname.substring(0, uname.length()-1);
+				else
+				if(ke.getKeyChar()!=KeyEvent.CHAR_UNDEFINED&&ke.getKeyCode()!=KeyEvent.VK_BACK_SPACE)
+				{
+					uname += ke.getKeyChar();
+				}
+				if(!User.checkAvailability(uname)||uname.equals("")) {
+					checklbl.setIcon(new ImageIcon(error));
+					//System.out.println(UName_Field.getText());
+				}
+				else
+					checklbl.setIcon(new ImageIcon(ok));
+			}
+		});
 		UName_Field.setBounds(306, 412, 204, 29);
 		frame.getContentPane().add(UName_Field);
 		UName_Field.setColumns(10);
@@ -173,6 +195,13 @@ public class RegisterFrame
 		Image img4=new ImageIcon(this.getClass().getResource("/Home icon.png")).getImage();
 		Home_label.setIcon(new ImageIcon(img4));
 		frame.getContentPane().add(Home_label);
+		
+		checklbl = new JLabel("");
+		checklbl.setBounds(522, 412, 24, 29);
+		ok = new ImageIcon(this.getClass().getResource("/ok.png")).getImage();
+		error = new ImageIcon(this.getClass().getResource("/error.png")).getImage();
+		checklbl.setIcon(new ImageIcon(error));
+		frame.getContentPane().add(checklbl);
 		frame.setBounds(100, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
