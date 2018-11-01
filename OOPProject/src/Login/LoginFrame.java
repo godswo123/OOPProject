@@ -3,15 +3,14 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.border.EmptyBorder;
-import java.sql.*;
 
-public class Login extends JFrame {
 
-	private JFrame frame;
+@SuppressWarnings("serial")
+public class LoginFrame extends JFrame {
+
 	private JPanel contentPane;
 	private JTextField UserNameField;
 	private JPasswordField passwordField;
-	Connection conn;
 	/**
 	 * Launch the application.
 	 */
@@ -19,7 +18,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					LoginFrame frame = new LoginFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,17 +30,8 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
-		try
-		{
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
-			initialize();
-		}
-		catch(SQLException e)
-		{
-			JOptionPane.showMessageDialog(null,"Encountered error in establishing "
-					+ "connection to server. Check the server and try again.");
-		}
+	public LoginFrame() {
+		initialize();
 	}
 	private void initialize()
 	{
@@ -52,7 +42,7 @@ public class Login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setTitle("BookMyHotel");
 		UserNameField = new JTextField();
 		UserNameField.setBounds(554, 283, 129, 30);
 		contentPane.add(UserNameField);
@@ -60,10 +50,26 @@ public class Login extends JFrame {
 		
 		passwordField = new JPasswordField();
 		passwordField.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-					checkLogin();
+				{
+					JLabel errLabel = new JLabel("");
+					errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+					UIManager.put("Button.background", Color.white);
+					
+					if(User.login(UserNameField.getText(), passwordField.getText()))
+					{
+						errLabel.setText("Successful Login.");
+						JOptionPane.showMessageDialog(null,errLabel);
+					}
+					else
+					{
+						errLabel.setText("Invalid Login.");
+						JOptionPane.showMessageDialog(null, errLabel);
+					}
+				}
 			}
 		});
 		passwordField.setBounds(554, 346, 129, 30);
@@ -75,8 +81,25 @@ public class Login extends JFrame {
 		Image img1=new ImageIcon(this.getClass().getResource("/login.png")).getImage();
 		btnLogin.setIcon(new ImageIcon(img1));
 		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				checkLogin();
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				JLabel errLabel = new JLabel("");
+				errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+				UIManager.put("Button.background", Color.white);
+				
+				if(User.login(UserNameField.getText(), passwordField.getText()))
+				{
+					errLabel.setText("Successful Login.");
+					JOptionPane.showMessageDialog(null,errLabel);
+				}
+				else
+				{
+					errLabel.setText("Invalid Login.");
+					JOptionPane.showMessageDialog(null, errLabel);
+				}
+					
 			}
 		});
 		btnLogin.setBackground(new Color(0, 204, 204));
@@ -123,52 +146,11 @@ public class Login extends JFrame {
 		Home_label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Welcome obj=new Welcome();
+				WelcomeFrame obj=new WelcomeFrame();
 				obj.Welcome_frame.setVisible(true);
 				dispose();
 			}
 		});
 		contentPane.add(Home_label);
-	}
-	private void checkLogin()
-	{	
-		
-		
-		String uname = UserNameField.getText();
-		String pass = passwordField.getText();
-		
-		try
-		{
-			Statement stmt = conn.createStatement();
-			String qry = "SELECT password FROM db.userinfo WHERE username='"+uname+"'";
-			ResultSet rs = stmt.executeQuery(qry);
-			
-			JLabel errLabel = new JLabel("");
-			errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-			UIManager.put("Button.background", Color.white);
-			
-			if(rs.next())
-			{
-				if(rs.getString(1).equals(pass))
-				{
-					errLabel.setText("Successful Login.");
-					JOptionPane.showMessageDialog(null,errLabel);
-				}
-				else
-				{
-					errLabel.setText("Invalid Login.");
-					JOptionPane.showMessageDialog(null, errLabel);
-				}
-			}
-			else
-			{
-				errLabel.setText("Invalid username.");
-				JOptionPane.showMessageDialog(null, errLabel);
-			}
-		}
-		catch(SQLException e)
-		{
-			
-		}
 	}
 }

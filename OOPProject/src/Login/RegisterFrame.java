@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class Register 
+public class RegisterFrame 
 {
 
 	JFrame frame;
@@ -24,7 +24,7 @@ public class Register
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Register window = new Register();
+					RegisterFrame window = new RegisterFrame();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					//e.printStackTrace();
@@ -36,17 +36,8 @@ public class Register
 	/**
 	 * Create the application.
 	 */
-	public Register() {
-		try
-		{
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
-			initialize();
-		}
-		catch(SQLException e)
-		{
-			JOptionPane.showMessageDialog(null,"Encountered error in establishing "
-					+ "connection to server. Check the server and try again.");
-		}
+	public RegisterFrame() {
+		initialize();
 	}
 
 	/**
@@ -55,10 +46,10 @@ public class Register
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(250, 235, 215));
-		frame.setBounds(100, 100,900, 700);
+		frame.setBounds(100, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-	
+		frame.setTitle("BookMyHotel");
 		JLabel label = new JLabel("BookMyHotel");
 		label.setBounds(21, 11, 320, 65);
 		label.setForeground(new Color(102, 0, 51));
@@ -172,7 +163,7 @@ public class Register
 		Home_label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Welcome obj=new Welcome();
+				WelcomeFrame obj=new WelcomeFrame();
 				obj.Welcome_frame.setVisible(true);
 				frame.dispose();
 			}
@@ -185,6 +176,7 @@ public class Register
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void checkRegistration(JFrame f)
 	{
 		String name=Name_Field.getText();
@@ -195,6 +187,8 @@ public class Register
 		String OrPass=FirstPass_Field.getText();
 		String RePass=RePass_Field.getText();
 		
+		MyConnection.getConnection();
+		
 		try
 		{
 			
@@ -202,9 +196,8 @@ public class Register
 			errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 			UIManager.put("Button.background", Color.white);
 			
-			Statement stmt = conn.createStatement();
-			String qry = "SELECT password FROM db.userinfo WHERE username='"+UName+"'";
-			ResultSet rs = stmt.executeQuery(qry);
+			String query = "SELECT password FROM userinfo WHERE username='"+UName+"'";
+			ResultSet rs = MyConnection.executeQuery(query);
 			
 			if(rs.next())
 			{
@@ -223,21 +216,21 @@ public class Register
 				JOptionPane.showMessageDialog(null, errLabel);
 
 			}
-			
 			else
 			{
 				String qry1="INSERT INTO db.userinfo VALUES('"+name+"','"+DOB+"','"+Add+"','"+Email+"','"+UName+"','"+OrPass+"')" ;
-				stmt.executeUpdate(qry1);
+				MyConnection.updateQuery(qry1);
 				errLabel.setText("Successful Registration! Login to continue with booking");
 				JOptionPane.showMessageDialog(null, errLabel);
-				Login obj =new Login();
+				MyConnection.closeConnection();
+				LoginFrame obj =new LoginFrame();
 				obj.setVisible(true);
 				f.dispose();
 			}
+			
 		}catch(Exception e)
 		{
 			
 		}
-		
 	}
 }
