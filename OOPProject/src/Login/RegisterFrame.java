@@ -33,9 +33,10 @@ public class RegisterFrame extends JFrame {
 	private JTextField Email_Field;
 	private JTextField UName_Field;
 	private JPasswordField FirstPass_Field;
-	Connection conn;
+	private Image ok;
+	private Image error;
+	private JLabel checklbl;
 	private JPasswordField RePass_Field;
-	
 
 	/**
 	 * Launch the application.
@@ -77,8 +78,7 @@ public class RegisterFrame extends JFrame {
 		JLabel label_1 = new JLabel("-Your Stay our Responsibility");
 		label_1.setBounds(277, 11, 386, 65);
 		label_1.setForeground(new Color(102, 0, 51));
-		label_1.setFont(new Font("Consolas", Font.PLAIN, 23));
-		contentPane.add(label_1);
+
 		
 		JLabel Name_Label = new JLabel("Name*");
 		Name_Label.setBounds(88, 168, 124, 29);
@@ -136,6 +136,25 @@ public class RegisterFrame extends JFrame {
 		Email_Field.setColumns(10);
 		
 		UName_Field = new JTextField();
+		UName_Field.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent ke) 
+			{
+				if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE&&uname.length()>0)
+					uname = uname.substring(0, uname.length()-1);
+				else
+				if(ke.getKeyChar()!=KeyEvent.CHAR_UNDEFINED&&ke.getKeyCode()!=KeyEvent.VK_BACK_SPACE)
+				{
+					uname += ke.getKeyChar();
+				}
+				if(!User.checkAvailability(uname)||uname.equals("")) {
+					checklbl.setIcon(new ImageIcon(error));
+					//System.out.println(UName_Field.getText());
+				}
+				else
+					checklbl.setIcon(new ImageIcon(ok));
+			}
+		});
 		UName_Field.setBounds(306, 412, 204, 29);
 		contentPane.add(UName_Field);
 		UName_Field.setColumns(10);
@@ -196,7 +215,7 @@ public class RegisterFrame extends JFrame {
 	
 		
 		JButton btnNewButton = new JButton("Submit");
-		btnNewButton.setBounds(366, 608, 89, 42);
+		btnNewButton.setBounds(363, 598, 89, 42);
 		btnNewButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -234,14 +253,12 @@ public class RegisterFrame extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(btnNewButton);
 		
-		
-		
-		
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(795, 95, 40, 54);
 		contentPane.add(label_2);
 		
 		JLabel Home_label = new JLabel("");
+		Home_label.setToolTipText("Back to Home");
 		Home_label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -253,8 +270,5 @@ public class RegisterFrame extends JFrame {
 		Home_label.setBounds(834, 11, 40, 54);
 		Image img4=new ImageIcon(this.getClass().getResource("/Home icon.png")).getImage();
 		Home_label.setIcon(new ImageIcon(img4));
-		contentPane.add(Home_label);
-		setBounds(180, 30, 900, 700);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

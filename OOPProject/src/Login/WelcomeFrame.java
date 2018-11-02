@@ -56,7 +56,7 @@ public class WelcomeFrame {
 		JPanel panel = new JPanel();
 		panel.setForeground(new Color(250, 235, 215));
 		panel.setBackground(new Color(250, 235, 215));
-		panel.setBounds(307, 177, 408, 155);
+		panel.setBounds(306, 177, 407, 155);
 		Welcome_frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -74,9 +74,9 @@ public class WelcomeFrame {
 		btnNewButton.setBounds(259, 31, 121, 34);
 		panel.add(btnNewButton);
 		
-		JLabel lblAreYouA = new JLabel("Are you a new user?");
+		JLabel lblAreYouA = new JLabel("New User?");
 		lblAreYouA.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblAreYouA.setBounds(25, 95, 198, 34);
+		lblAreYouA.setBounds(126, 95, 121, 34);
 		panel.add(lblAreYouA);
 		
 		JButton btnNewButton_1 = new JButton("Register");
@@ -94,7 +94,7 @@ public class WelcomeFrame {
 		panel.add(btnNewButton_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("-Your Stay our Responsibility");
-		lblNewLabel_1.setFont(new Font("Consolas", Font.PLAIN, 25));
+		lblNewLabel_1.setFont(new Font("Consolas", Font.ITALIC, 25));
 		lblNewLabel_1.setForeground(new Color(102, 0, 51));
 		lblNewLabel_1.setBounds(378, 23, 446, 64);
 		Welcome_frame.getContentPane().add(lblNewLabel_1);
