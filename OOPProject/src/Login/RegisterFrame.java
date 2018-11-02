@@ -10,8 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,7 +35,7 @@ public class RegisterFrame extends JFrame {
 	private Image error;
 	private JLabel checklbl;
 	private JPasswordField RePass_Field;
-
+	private String uname = "";
 	/**
 	 * Launch the application.
 	 */
@@ -149,7 +147,6 @@ public class RegisterFrame extends JFrame {
 				}
 				if(!User.checkAvailability(uname)||uname.equals("")) {
 					checklbl.setIcon(new ImageIcon(error));
-					//System.out.println(UName_Field.getText());
 				}
 				else
 					checklbl.setIcon(new ImageIcon(ok));
@@ -209,7 +206,7 @@ public class RegisterFrame extends JFrame {
 		
 		
 		JLabel lblNewLabel = new JLabel("All fields marked * compulsary");
-		lblNewLabel.setBounds(490, 555, 240, 14);
+		lblNewLabel.setBounds(490, 555, 197, 14);
 		contentPane.add(lblNewLabel);
 		
 	
@@ -256,6 +253,14 @@ public class RegisterFrame extends JFrame {
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(795, 95, 40, 54);
 		contentPane.add(label_2);
+		
+		checklbl = new JLabel("");
+		checklbl = new JLabel("");
+		checklbl.setBounds(522, 412, 24, 29);
+		ok = new ImageIcon(this.getClass().getResource("/ok.png")).getImage();
+		error = new ImageIcon(this.getClass().getResource("/error.png")).getImage();
+		checklbl.setIcon(new ImageIcon(error));
+		contentPane.add(checklbl);
 		
 		JLabel Home_label = new JLabel("");
 		Home_label.setToolTipText("Back to Home");

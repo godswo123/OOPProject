@@ -52,8 +52,6 @@ public class User
 				return 1;
 			}
 			
-			
-			 
 			else if(!(OrPass.equals(RePass)))
 			{
 				return 2;
@@ -69,12 +67,23 @@ public class User
 		{
 			return 0;
 		}
+		finally {
+			MyConnection.closeConnection();
+		}
 		
 	}
 	
 	
 	public static boolean checkAvailability(String username)
 	{
+		
+		for(int i=0;i<username.length();i++)
+		{
+			if(!(((username.charAt(i)>='A'&&username.charAt(i)<='Z')||(username.charAt(i)>='a'&&username.charAt(i)<='z'))||(username.charAt(i)>='0'&&username.charAt(i)<='9')))
+			{
+				return false;
+			}
+		}
 		MyConnection.getConnection();
 		String query = "select username from userinfo where username = '"+username+"'";
 		ResultSet rSet = MyConnection.executeQuery(query);
