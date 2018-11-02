@@ -76,7 +76,7 @@ public class User
 	public static boolean checkAvailability(String username)
 	{
 		MyConnection.getConnection();
-		String query = "select username from db.userinfo where username = '"+username+"'";
+		String query = "select username from userinfo where username = '"+username+"'";
 		ResultSet rSet = MyConnection.executeQuery(query);
 		try {
 			if(rSet.next())

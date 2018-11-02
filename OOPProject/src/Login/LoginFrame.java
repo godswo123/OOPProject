@@ -36,7 +36,7 @@ public class LoginFrame extends JFrame {
 	private void initialize()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(80, 80, 900,700);
+		setBounds(180, 30, 900,700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 235, 215));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

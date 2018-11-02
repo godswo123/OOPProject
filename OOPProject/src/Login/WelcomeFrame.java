@@ -37,7 +37,7 @@ public class WelcomeFrame {
 		Welcome_frame = new JFrame();
 		Welcome_frame.getContentPane().setBackground(new Color(250, 235, 215));
 		Welcome_frame.getContentPane().setForeground(new Color(0, 255, 255));
-		Welcome_frame.setBounds(80, 80, 900, 700);
+		Welcome_frame.setBounds(180, 30, 900, 700);
 		Welcome_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Welcome_frame.getContentPane().setLayout(null);
 		Welcome_frame.setTitle("BookMyHotel");

@@ -58,7 +58,7 @@ public class RegisterFrame extends JFrame {
 	 */
 	public RegisterFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(80,80, 900, 700);
+		setBounds(180,30, 900, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 235, 215));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -254,7 +254,7 @@ public class RegisterFrame extends JFrame {
 		Image img4=new ImageIcon(this.getClass().getResource("/Home icon.png")).getImage();
 		Home_label.setIcon(new ImageIcon(img4));
 		contentPane.add(Home_label);
-		setBounds(100, 100, 900, 700);
+		setBounds(180, 30, 900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
