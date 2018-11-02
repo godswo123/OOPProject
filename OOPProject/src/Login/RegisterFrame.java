@@ -1,14 +1,32 @@
 package Login;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.sql.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
 
-public class RegisterFrame 
-{
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
-	JFrame frame;
+@SuppressWarnings("serial")
+public class RegisterFrame extends JFrame {
+
+	private JPanel contentPane;
 	private JTextField Name_Field;
 	private JTextField DOB_Field;
 	private JTextField Add_Field;
@@ -17,6 +35,8 @@ public class RegisterFrame
 	private JPasswordField FirstPass_Field;
 	Connection conn;
 	private JPasswordField RePass_Field;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -24,140 +44,202 @@ public class RegisterFrame
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegisterFrame window = new RegisterFrame();
-					window.frame.setVisible(true);
+					RegisterFrame frame = new RegisterFrame();
+					frame.setVisible(true);
 				} catch (Exception e) {
-					//e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 		});
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
 	public RegisterFrame() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(250, 235, 215));
-		frame.setBounds(100, 100, 900, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setTitle("BookMyHotel");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(80,80, 900, 700);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(250, 235, 215));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		setTitle("BookMyHotel");
+		
+		
 		JLabel label = new JLabel("BookMyHotel");
 		label.setBounds(21, 11, 320, 65);
 		label.setForeground(new Color(102, 0, 51));
 		label.setFont(new Font("Consolas", Font.BOLD, 40));
 		label.setBackground(Color.WHITE);
-		frame.getContentPane().add(label);
+		contentPane.add(label);
 		
 		JLabel label_1 = new JLabel("-Your Stay our Responsibility");
 		label_1.setBounds(277, 11, 386, 65);
 		label_1.setForeground(new Color(102, 0, 51));
 		label_1.setFont(new Font("Consolas", Font.PLAIN, 23));
-		frame.getContentPane().add(label_1);
+		contentPane.add(label_1);
 		
 		JLabel Name_Label = new JLabel("Name*");
 		Name_Label.setBounds(88, 168, 124, 29);
 		Name_Label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		frame.getContentPane().add(Name_Label);
+		contentPane.add(Name_Label);
 		
 		JLabel DOB_Label = new JLabel("Date Of Birth*");
 		DOB_Label.setBounds(88, 219, 139, 29);
 		DOB_Label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		frame.getContentPane().add(DOB_Label);
+		contentPane.add(DOB_Label);
 		
 		JLabel Add_Label = new JLabel("Address*");
 		Add_Label.setBounds(88, 288, 124, 21);
 		Add_Label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		frame.getContentPane().add(Add_Label);
+		contentPane.add(Add_Label);
 		
 		JLabel Email_Label = new JLabel("EmailID*");
 		Email_Label.setBounds(88, 356, 124, 21);
 		Email_Label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		frame.getContentPane().add(Email_Label);
+		contentPane.add(Email_Label);
 		
 		JLabel UName_Label = new JLabel("UserName*");
 		UName_Label.setBounds(88, 413, 124, 21);
 		UName_Label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		frame.getContentPane().add(UName_Label);
+		contentPane.add(UName_Label);
 		
 		JLabel First_Pass = new JLabel("Password*");
 		First_Pass.setBounds(88, 465, 124, 26);
 		First_Pass.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		frame.getContentPane().add(First_Pass);
+		contentPane.add(First_Pass);
 		
 		JLabel Re_Pass = new JLabel("Reenter Password*");
 		Re_Pass.setBounds(88, 514, 185, 29);
 		Re_Pass.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		frame.getContentPane().add(Re_Pass);
+		contentPane.add(Re_Pass);
 		
 		Name_Field = new JTextField();
 		Name_Field.setBounds(306, 168, 204, 29);
-		frame.getContentPane().add(Name_Field);
+		contentPane.add(Name_Field);
 		Name_Field.setColumns(10);
 		
 		DOB_Field = new JTextField();
 		DOB_Field.setBounds(306, 219, 204, 29);
-		frame.getContentPane().add(DOB_Field);
+		contentPane.add(DOB_Field);
 		DOB_Field.setColumns(10);
 		
 		Add_Field = new JTextField();
 		Add_Field.setBounds(306, 275, 204, 53);
-		frame.getContentPane().add(Add_Field);
+		contentPane.add(Add_Field);
 		Add_Field.setColumns(10);
 		
 		Email_Field =  new JTextField();
 		Email_Field.setBounds(306, 355, 204, 29);
-		frame.getContentPane().add(Email_Field);
+		contentPane.add(Email_Field);
 		Email_Field.setColumns(10);
 		
 		UName_Field = new JTextField();
 		UName_Field.setBounds(306, 412, 204, 29);
-		frame.getContentPane().add(UName_Field);
+		contentPane.add(UName_Field);
 		UName_Field.setColumns(10);
 		
 		FirstPass_Field = new JPasswordField();
 		FirstPass_Field.setBounds(306, 465, 204, 26);
-		frame.getContentPane().add(FirstPass_Field);
+		contentPane.add(FirstPass_Field);
 		
+		JLabel errLabel = new JLabel("");
+		errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		UIManager.put("Button.background", Color.white);
+		
+		RePass_Field = new JPasswordField();
+		RePass_Field.setBounds(306, 514, 204, 29);
+		contentPane.add(RePass_Field);
+		RePass_Field.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					int b=User.register(Name_Field.getText(),DOB_Field.getText(),Add_Field.getText(),Email_Field.getText(),UName_Field.getText(),FirstPass_Field.getText(),RePass_Field.getText());
+					if(b==0)
+					{
+						errLabel.setText("No Field should be left vacant");
+						JOptionPane.showMessageDialog(null, errLabel);
+					}
+					if(b==1)
+					{
+						errLabel.setText("UserName Exists");
+						JOptionPane.showMessageDialog(null, errLabel);
+					}
+					if(b==2)
+					{
+						errLabel.setText("Password Mismatch");
+						JOptionPane.showMessageDialog(null, errLabel);
+					}
+					if(b==3)
+					{
+						errLabel.setText("Successful Registration! Login to continue with booking");
+						JOptionPane.showMessageDialog(null, errLabel);
+						MyConnection.closeConnection();
+						LoginFrame obj =new LoginFrame();
+						obj.setVisible(true);
+						dispose();
+					}
+				}
+			}
+		});
+		contentPane.add(RePass_Field);
+		
+		
+		JLabel lblNewLabel = new JLabel("All fields marked * compulsary");
+		lblNewLabel.setBounds(490, 555, 240, 14);
+		contentPane.add(lblNewLabel);
+		
+	
 		
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.setBounds(366, 608, 89, 42);
 		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				checkRegistration(frame);
+				int a=User.register(Name_Field.getText(),DOB_Field.getText(),Add_Field.getText(),Email_Field.getText(),UName_Field.getText(),FirstPass_Field.getText(),RePass_Field.getText());
+				if(a==0)
+				{
+					errLabel.setText("No Field should be left vacant");
+					JOptionPane.showMessageDialog(null, errLabel);
+				}
+				if(a==1)
+				{
+					errLabel.setText("UserName Exists");
+					JOptionPane.showMessageDialog(null, errLabel);
+				}
+				if(a==2)
+				{
+					errLabel.setText("Password Mismatch");
+					JOptionPane.showMessageDialog(null, errLabel);
+				}
+				if(a==3)
+				{
+					errLabel.setText("Successful Registration! Login to continue with booking");
+					JOptionPane.showMessageDialog(null, errLabel);
+					MyConnection.closeConnection();
+					LoginFrame obj =new LoginFrame();
+					obj.setVisible(true);
+					dispose();
+				}
+
 			}
 		});
+		
 		btnNewButton.setBackground(new Color(0, 204, 204));
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		frame.getContentPane().add(btnNewButton);
+		contentPane.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("All fields marked * compulsary");
-		lblNewLabel.setBounds(490, 555, 240, 14);
-		frame.getContentPane().add(lblNewLabel);
 		
-		RePass_Field = new JPasswordField();
-		RePass_Field.setBounds(306, 514, 204, 29);
-		RePass_Field.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-					checkRegistration(frame);
-			}
-		});
-		frame.getContentPane().add(RePass_Field);
+		
 		
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(795, 95, 40, 54);
-		frame.getContentPane().add(label_2);
+		contentPane.add(label_2);
 		
 		JLabel Home_label = new JLabel("");
 		Home_label.addMouseListener(new MouseAdapter() {
@@ -165,72 +247,14 @@ public class RegisterFrame
 			public void mouseClicked(MouseEvent e) {
 				WelcomeFrame obj=new WelcomeFrame();
 				obj.Welcome_frame.setVisible(true);
-				frame.dispose();
+				dispose();
 			}
 		});
 		Home_label.setBounds(834, 11, 40, 54);
 		Image img4=new ImageIcon(this.getClass().getResource("/Home icon.png")).getImage();
 		Home_label.setIcon(new ImageIcon(img4));
-		frame.getContentPane().add(Home_label);
-		frame.setBounds(100, 100, 900, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-	
-	@SuppressWarnings("deprecation")
-	private void checkRegistration(JFrame f)
-	{
-		String name=Name_Field.getText();
-		String DOB=DOB_Field.getText();
-		String Add=Add_Field.getText();
-		String Email=Email_Field.getText();
-		String UName=UName_Field.getText();
-		String OrPass=FirstPass_Field.getText();
-		String RePass=RePass_Field.getText();
-		
-		MyConnection.getConnection();
-		
-		try
-		{
-			
-			JLabel errLabel = new JLabel("");
-			errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-			UIManager.put("Button.background", Color.white);
-			
-			String query = "SELECT password FROM userinfo WHERE username='"+UName+"'";
-			ResultSet rs = MyConnection.executeQuery(query);
-			
-			if(rs.next())
-			{
-				errLabel.setText("UserName Exists");
-				JOptionPane.showMessageDialog(null, errLabel);
-			}
-			else if(name.equals("")||DOB.equals("")||Add.equals("")||Email.equals("")||UName.equals("")||OrPass.equals("")||RePass.equals(""))
-			{
-				errLabel.setText("No Field should be left vacant");
-				JOptionPane.showMessageDialog(null, errLabel);
-				
-			}
-			else if(!(OrPass.equals(RePass)))
-			{
-				errLabel.setText("Password Mismatch");
-				JOptionPane.showMessageDialog(null, errLabel);
-
-			}
-			else
-			{
-				String qry1="INSERT INTO db.userinfo VALUES('"+name+"','"+DOB+"','"+Add+"','"+Email+"','"+UName+"','"+OrPass+"')" ;
-				MyConnection.updateQuery(qry1);
-				errLabel.setText("Successful Registration! Login to continue with booking");
-				JOptionPane.showMessageDialog(null, errLabel);
-				MyConnection.closeConnection();
-				LoginFrame obj =new LoginFrame();
-				obj.setVisible(true);
-				f.dispose();
-			}
-			
-		}catch(Exception e)
-		{
-			
-		}
+		contentPane.add(Home_label);
+		setBounds(100, 100, 900, 700);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

@@ -36,13 +36,14 @@ public class LoginFrame extends JFrame {
 	private void initialize()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900,700);
+		setBounds(80, 80, 900,700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 235, 215));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setTitle("BookMyHotel");
+		
 		UserNameField = new JTextField();
 		UserNameField.setBounds(554, 283, 129, 30);
 		contentPane.add(UserNameField);

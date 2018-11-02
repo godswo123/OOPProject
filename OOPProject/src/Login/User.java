@@ -7,7 +7,7 @@ public class User
 	{	
 		if(MyConnection.getConnection())
 		{
-			String query = "select password from userinfo where username = '"+username+"'";
+			String query = "select Password from userinfo where UserName = '"+username+"'";
 			ResultSet rSet = MyConnection.executeQuery(query);
 			try
 			{
@@ -31,21 +31,52 @@ public class User
 		
 	}
 	
-	public static void register(String Name, String DOB, String emailid, String username, String password,String Address)
+	public static int register(String name, String DOB,String Add, String Email, String UName, String OrPass,String RePass)
 	{
 		
 		MyConnection.getConnection();
-		String query = "INSERT INTO userinfo (`name`, `dob`, `address`, `emailid`, `username`, `password`)"
-					  +"VALUES ('"+Name+"', '"+DOB+"', '"+Address+"', '"+emailid+"', '"+username+"', '"+password+"')";
-		MyConnection.updateQuery(query);
-		MyConnection.closeConnection();
+		try
+		{
+			
+			String query = "SELECT Password FROM userinfo WHERE UserName='"+UName+"'";
+			ResultSet rs = MyConnection.executeQuery(query);
+			
+			
+			if(name.equals("")||DOB.equals("")||Add.equals("")||Email.equals("")||UName.equals("")||OrPass.equals("")||RePass.equals(""))
+			{
+				return 0;	
+			}
+			
+			else if(rs.next())
+			{
+				return 1;
+			}
+			
+			
+			 
+			else if(!(OrPass.equals(RePass)))
+			{
+				return 2;
+			}
+			else
+			{
+				String qry1="INSERT INTO userinfo VALUES('"+name+"','"+DOB+"','"+Add+"','"+Email+"','"+UName+"','"+OrPass+"')" ;
+				MyConnection.updateQuery(qry1);
+				return 3;
+			}
+			
+		}catch(Exception e)
+		{
+			return 0;
+		}
+		
 	}
 	
 	
 	public static boolean checkAvailability(String username)
 	{
 		MyConnection.getConnection();
-		String query = "select username from userinfo where username = '"+username+"'";
+		String query = "select username from db.userinfo where username = '"+username+"'";
 		ResultSet rSet = MyConnection.executeQuery(query);
 		try {
 			if(rSet.next())
