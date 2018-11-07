@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class Booking implements Serializable
 {
 	public static int refno;
