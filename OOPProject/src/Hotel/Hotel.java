@@ -264,5 +264,10 @@ public class Hotel implements Serializable
 	{
 		return rating;
 	}
+	public String gethotelname()
+	{return this.hotelName;}
+	 public void setRating(int rating)
+	{this.rating=rating;
+	}
 	
 }
