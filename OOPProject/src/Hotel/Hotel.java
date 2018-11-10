@@ -260,14 +260,10 @@ public class Hotel implements Serializable
 		MyConnection.closeConnection();
 	}
 	
-	public double getRating()
-	{
-		return rating;
-	}
 	public String gethotelname()
-	{return this.hotelName;}
-	 public void setRating(int rating)
-	{this.rating=rating;
+	{
+		return this.hotelName;
 	}
+	
 	
 }

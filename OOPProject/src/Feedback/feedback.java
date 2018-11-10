@@ -10,7 +10,8 @@ import Hotel.*;
 public class feedback {
     int rating=0;
 	public JFrame Welcome_frame;
-	Hotel fhotel;
+	private int refno;
+	private Hotel fhotel;
 	/**
 	 * Launch the application.
 	 */
@@ -19,7 +20,7 @@ public class feedback {
 			public void run() {
 				try {Hotel h=new Hotel("Marine","Delhi",20,4,20000);
 					
-					feedback window = new feedback(h);
+					feedback window = new feedback(1,h);
 					window.Welcome_frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,8 +32,9 @@ public class feedback {
 	/**
 	 * Create the application.
 	 */
-	public feedback( Hotel h) {
-  fhotel=h;
+	public feedback(int refno, Hotel fhotel) {
+		this.refno = refno;
+		this.fhotel = fhotel;
 		initialize();
 	}
 
@@ -51,13 +53,13 @@ public class feedback {
 		JLabel lblNewLabel = new JLabel("BookMyHotel");
 		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 45));
 		lblNewLabel.setForeground(new Color(102, 0, 51));
-		lblNewLabel.setBounds(88, 26, 310, 61);
+		lblNewLabel.setBounds(28, 23, 310, 61);
 		Welcome_frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("-Your Stay our Responsibility");
 		lblNewLabel_1.setFont(new Font("Consolas", Font.ITALIC, 25));
 		lblNewLabel_1.setForeground(new Color(102, 0, 51));
-		lblNewLabel_1.setBounds(378, 23, 446, 64);
+		lblNewLabel_1.setBounds(332, 26, 446, 64);
 		Welcome_frame.getContentPane().add(lblNewLabel_1);
 		
 		String str="Rate your stay at the hotel "+fhotel.gethotelname();
@@ -93,7 +95,7 @@ public class feedback {
 		JLabel lblNewLabel_3 = new JLabel(str2);
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.ITALIC, 25));
 		lblNewLabel_3.setForeground(new Color(102, 0, 51));
-		lblNewLabel_3.setBounds(264, 539, 310, 64);
+		lblNewLabel_3.setBounds(264, 531, 310, 64);
 		Welcome_frame.getContentPane().add(lblNewLabel_3);
 		lblNewLabel_3.setVisible(false);
 		
@@ -147,7 +149,7 @@ public class feedback {
 		});
 		JLabel label41 = new JLabel("");
 		label41.setIcon(new ImageIcon(img21));
-		label41.setBounds(478, 416, 85, 78);
+		label41.setBounds(481, 421, 85, 78);
 		Welcome_frame.getContentPane().add(label41);
 		label41.addMouseListener(new MouseAdapter() {
 			@Override
@@ -209,7 +211,7 @@ public class feedback {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(361, 620, 152, 31);
+		btnNewButton.setBounds(346, 608, 152, 31);
 		Welcome_frame.getContentPane().add(btnNewButton);
 		
 		JTextArea textArea = new JTextArea();
@@ -219,10 +221,10 @@ public class feedback {
 		JLabel lblCommentsAndSuggestions = new JLabel("Comments and Suggestions");
 		lblCommentsAndSuggestions.setForeground(new Color(102, 0, 51));
 		lblCommentsAndSuggestions.setFont(new Font("Times New Roman", Font.ITALIC, 25));
-		lblCommentsAndSuggestions.setBounds(244, 112, 295, 54);
+		lblCommentsAndSuggestions.setBounds(268, 110, 295, 54);
 		Welcome_frame.getContentPane().add(lblCommentsAndSuggestions);
 	
-		fhotel.setRating(rating);
+		fhotel.takeFeedback(refno, lblCommentsAndSuggestions.getText(), rating);
 		
 	}
 }

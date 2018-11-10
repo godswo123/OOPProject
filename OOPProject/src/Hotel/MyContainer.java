@@ -66,7 +66,7 @@ public class MyContainer implements Serializable
 		return null;
 	}
 	
-	public static void addHotel(String hotelName, String location, int maxNoOfRooms, int maxNoOfPeoplePerRoom, int pricePerRoom)
+	public static void addHotel(String hotelName, String location, int maxNoOfRooms, int maxNoOfPeoplePerRoom, double pricePerRoom)
 	{
 		int sno = 0;
 		String query = "select sno from hotelinfo";
