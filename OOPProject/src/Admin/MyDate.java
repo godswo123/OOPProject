@@ -1,10 +1,18 @@
 package Admin;
 
+import java.beans.Statement;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import Login.MyConnection;
 
 public class MyDate 
 {
@@ -62,5 +70,55 @@ public class MyDate
 	public static java.sql.Date convToSqlDate(java.util.Date udate)
 	{
 		return new java.sql.Date(udate.getTime());
+	}
+	
+	public static void updateStatus()
+	{
+		MyConnection.getConnection();
+		String query = "select checkin, status from bookinginfo";
+		ResultSet rSet = MyConnection.executeQuery(query);
+		try {
+			Connection connection = null;
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
+			java.sql.Statement statement = connection.createStatement();
+			while(rSet.next())
+			{
+				
+				Date checkInDate = rSet.getDate(1);
+				String status = rSet.getString(2);
+				String newStatus = "COMPLETED";//Default.
+				if(MyDate.getIndex(checkInDate)<=MyDate.getIndex(currDate))
+				{
+					if(status.equals("CONFIRMED"))
+					{
+						newStatus = "COMPLETED";
+					}
+					else
+					if(status.equals("WAITING"))
+					{
+						newStatus = "INCOMPLETE";
+					}
+					else 
+					{
+						newStatus = status;
+					}
+					query = "UPDATE bookinginfo SET status = '"+newStatus+"'";
+					try {
+						statement.executeUpdate(query);
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			MyConnection.closeConnection();
+		}
 	}
 }

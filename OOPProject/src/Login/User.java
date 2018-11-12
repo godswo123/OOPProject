@@ -31,7 +31,7 @@ public class User
 		
 	}
 	
-	public static int register(String name, String DOB,String Add, String Email, String UName, String OrPass,String RePass)
+	public static int register(String name, Date DOB, String Add, String Email, String UName, String OrPass,String RePass)
 	{
 		
 		MyConnection.getConnection();
@@ -42,9 +42,9 @@ public class User
 			ResultSet rs = MyConnection.executeQuery(query);
 			
 			
-			if(name.equals("")||DOB.equals("")||Add.equals("")||Email.equals("")||UName.equals("")||OrPass.equals("")||RePass.equals(""))
+			if(name.equals("")||Add.equals("")||Email.equals("")||UName.equals("")||OrPass.equals("")||RePass.equals(""))
 			{
-				return 0;	
+				return 0;
 			}
 			
 			else if(rs.next())
@@ -122,6 +122,51 @@ public class User
 			MyConnection.closeConnection();
 		}
 
+	}
+	
+	public static int updateInfo(String name, Date DOB, String Add, String Email, String UName, String OPass, String NPass)
+	{
+		MyConnection.getConnection();
+		try
+		{
+			
+			String query = "SELECT Password FROM userinfo WHERE UserName='"+UName+"'";
+			ResultSet rs = MyConnection.executeQuery(query);
+			String password = "";
+			if(rs.next())
+			{
+				password = rs.getString(1);
+			}
+			if(name.equals("")||Add.equals("")||Email.equals("")||UName.equals("")||NPass.equals(""))
+			{
+				return 0;
+			}
+			else if(!password.equals(OPass))
+			{
+				return 1;
+			}
+			else
+			{
+				String qry1="UPDATE userinfo SET name = '"+name+"', dob = '"+DOB+"', address = '"+Add+"', emailid = '"+Email+"', password = '"+NPass+"'";
+				MyConnection.updateQuery(qry1);
+				return 2;
+			}
+			
+		}catch(Exception e)
+		{
+			return 0;
+		}
+		finally {
+			MyConnection.closeConnection();
+		}
+	}
+	
+	public static void removeAccount(String username)
+	{
+		MyConnection.getConnection();
+		String query = "UPDATE userinfo SET password = 'removed' where username ='"+username+"'";
+		MyConnection.updateQuery(query);
+		MyConnection.closeConnection();
 	}
 	
 }

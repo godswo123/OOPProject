@@ -39,6 +39,7 @@ import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import javax.swing.JCheckBox;
 
 public class AdminFrame extends JFrame {
 
@@ -242,6 +243,7 @@ public class AdminFrame extends JFrame {
 				MyDate.setDate(sDate);
 				JOptionPane.showMessageDialog(null, "Changes Applied", "Information", JOptionPane.INFORMATION_MESSAGE);
 				dateLabel.setText(MyDate.getCurrDate().toString());
+				MyDate.updateStatus();
 			}
 		});
 		
@@ -251,90 +253,119 @@ public class AdminFrame extends JFrame {
 		addLocation.setLayout(null);
 		
 		JLabel lblAddNewLocation = new JLabel("Enter Location :");
+		lblAddNewLocation.setBounds(59, 23, 188, 43);
 		lblAddNewLocation.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblAddNewLocation.setBounds(131, 17, 188, 43);
 		addLocation.add(lblAddNewLocation);
 		
 		textFieldLocation = new JTextField();
-		textFieldLocation.setBounds(370, 23, 161, 34);
+		textFieldLocation.setBounds(290, 25, 161, 34);
 		addLocation.add(textFieldLocation);
 		textFieldLocation.setColumns(10);
 		
 		JButton btnAdd = new JButton("ADD");
+		btnAdd.setBounds(290, 359, 157, 34);
 		
 		btnAdd.setForeground(Color.WHITE);
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnAdd.setBackground(new Color(106, 90, 205));
-		btnAdd.setBounds(256, 359, 157, 34);
 		addLocation.add(btnAdd);
 		
 		JLabel lblEnterHotelName = new JLabel("Enter Hotel Name :");
+		lblEnterHotelName.setBounds(59, 79, 202, 43);
 		lblEnterHotelName.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblEnterHotelName.setBounds(131, 73, 202, 43);
 		addLocation.add(lblEnterHotelName);
 		
 		textFieldHotel = new JTextField();
+		textFieldHotel.setBounds(290, 81, 161, 34);
 		textFieldHotel.setColumns(10);
-		textFieldHotel.setBounds(370, 79, 161, 34);
 		addLocation.add(textFieldHotel);
 		
 		JLabel lblEnterNoOf = new JLabel("Max No Of Rooms :");
+		lblEnterNoOf.setBounds(59, 139, 226, 43);
 		lblEnterNoOf.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblEnterNoOf.setBounds(131, 133, 226, 43);
 		addLocation.add(lblEnterNoOf);
 		
 		JLabel lblMaxNoOf = new JLabel("Max No Of People");
+		lblMaxNoOf.setBounds(59, 195, 202, 43);
 		lblMaxNoOf.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblMaxNoOf.setBounds(131, 189, 202, 43);
 		addLocation.add(lblMaxNoOf);
 		
 		JLabel lblPerRoom = new JLabel("Per Room :");
+		lblPerRoom.setBounds(59, 221, 202, 43);
 		lblPerRoom.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblPerRoom.setBounds(131, 215, 202, 43);
 		addLocation.add(lblPerRoom);
 		
 		JLabel lblPricePerRoom = new JLabel("Price Per Room :");
+		lblPricePerRoom.setBounds(59, 271, 211, 43);
 		lblPricePerRoom.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		lblPricePerRoom.setBounds(131, 265, 211, 43);
 		addLocation.add(lblPricePerRoom);
 		
 		JLabel lblLocationIcon = new JLabel("");
-		lblLocationIcon.setBounds(543, 21, 32, 34);
+		lblLocationIcon.setBounds(463, 23, 32, 34);
 		addLocation.add(lblLocationIcon);
 		lblLocationIcon.setIcon(locationIcon);
 		
 		JLabel lblHotelIcon = new JLabel("");
-		lblHotelIcon.setBounds(543, 77, 32, 34);
+		lblHotelIcon.setBounds(463, 79, 32, 34);
 		addLocation.add(lblHotelIcon);
 		lblHotelIcon.setIcon(hotelIcon);
 		
 		JLabel lblRoomIcon = new JLabel("");
-		lblRoomIcon.setBounds(543, 133, 32, 34);
+		lblRoomIcon.setBounds(463, 135, 32, 34);
 		addLocation.add(lblRoomIcon);
 		lblRoomIcon.setIcon(roomIcon);
 		
 		JLabel lblPeopleIcon = new JLabel("");
-		lblPeopleIcon.setBounds(543, 204, 32, 34);
+		lblPeopleIcon.setBounds(463, 206, 32, 34);
 		addLocation.add(lblPeopleIcon);
 		lblPeopleIcon.setIcon(peopleIcon);
 		
 		JLabel lblPriceIcon = new JLabel("");
-		lblPriceIcon.setBounds(543, 265, 32, 34);
+		lblPriceIcon.setBounds(463, 267, 32, 34);
 		addLocation.add(lblPriceIcon);
 		lblPriceIcon.setIcon(priceIcon);
 		
 		JSpinner spinnerNoOfRooms = new JSpinner();
-		spinnerNoOfRooms.setBounds(370, 135, 161, 34);
+		spinnerNoOfRooms.setBounds(290, 137, 161, 34);
 		addLocation.add(spinnerNoOfRooms);
 		
 		JSpinner spinnerPeoplePerRoom = new JSpinner();
-		spinnerPeoplePerRoom.setBounds(370, 201, 161, 34);
+		spinnerPeoplePerRoom.setBounds(290, 203, 161, 34);
 		addLocation.add(spinnerPeoplePerRoom);
 		
 		textFieldPricePerRoom = new JTextField();
+		textFieldPricePerRoom.setBounds(290, 267, 161, 34);
 		textFieldPricePerRoom.setColumns(10);
-		textFieldPricePerRoom.setBounds(370, 265, 161, 34);
 		addLocation.add(textFieldPricePerRoom);
+		
+		JCheckBox chckbxFreeWifi = new JCheckBox("Free WiFi");
+		chckbxFreeWifi.setBackground(new Color(255, 218, 185));
+		chckbxFreeWifi.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		chckbxFreeWifi.setBounds(573, 79, 238, 43);
+		addLocation.add(chckbxFreeWifi);
+		
+		JLabel lblAmenitiesProvided = new JLabel("Amenities Provided");
+		lblAmenitiesProvided.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblAmenitiesProvided.setBounds(573, 23, 188, 43);
+		addLocation.add(lblAmenitiesProvided);
+		
+		JCheckBox chckbxCompBr = new JCheckBox("Complementary BreakFast");
+		chckbxCompBr.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		chckbxCompBr.setBackground(new Color(255, 218, 185));
+		chckbxCompBr.setBounds(573, 140, 238, 43);
+		addLocation.add(chckbxCompBr);
+		
+		JCheckBox chckbxSPool = new JCheckBox("Swimming Pool");
+		chckbxSPool.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		chckbxSPool.setBackground(new Color(255, 218, 185));
+		chckbxSPool.setBounds(573, 206, 238, 43);
+		addLocation.add(chckbxSPool);
+		
+		JCheckBox chckbxFreeParking = new JCheckBox("Free Parking");
+		chckbxFreeParking.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		chckbxFreeParking.setBackground(new Color(255, 218, 185));
+		chckbxFreeParking.setBounds(573, 271, 238, 43);
+		addLocation.add(chckbxFreeParking);
 		
 		JButton btnSetDate = new JButton("Set Date");
 		btnSetDate.addActionListener(new ActionListener() {
@@ -394,7 +425,14 @@ public class AdminFrame extends JFrame {
 					try 
 					{
 						double pricePerRoom = Double.parseDouble(textFieldPricePerRoom.getText());
-						MyContainer.addHotel(hotel, location, maxNoOfRooms, maxNoOfPeoplePerRoom, pricePerRoom);
+						boolean amenities[] = new boolean[4];
+						
+						amenities[0] = chckbxFreeWifi.isSelected();
+						amenities[1] = chckbxCompBr.isSelected();
+						amenities[2] = chckbxSPool.isSelected();
+						amenities[3] = chckbxFreeParking.isSelected();
+						
+						MyContainer.addHotel(hotel, location, maxNoOfRooms, maxNoOfPeoplePerRoom, pricePerRoom,amenities);
 						JOptionPane.showMessageDialog(null, "Hotel Added", "Information", JOptionPane.INFORMATION_MESSAGE);
 					}
 					catch (NumberFormatException e) 
