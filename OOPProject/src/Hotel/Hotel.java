@@ -9,6 +9,7 @@ import Login.MyConnection;
 import User.Booking;
 
 
+@SuppressWarnings("serial")
 public class Hotel implements Serializable
 {
 	private int roomsOccupied[] = new int[10000];
@@ -16,9 +17,11 @@ public class Hotel implements Serializable
 	private String location;
 	private int maxNoOfRooms;
 	private double rating = 0;
+	@SuppressWarnings("unused")
 	private String s[] = new String[1000];
 	private int noOfUserFeedbacks;
 	private int maxNoOfPeoplePerRoom;
+	@SuppressWarnings("unused")
 	private double pricePerRoom;
 	private int waitQueue[] = new int[1000];
 	private int waitQueueSize;

@@ -7,10 +7,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.ResultSet;
 
-import javax.xml.ws.AsyncHandler;
-
 import Login.MyConnection;
 
+@SuppressWarnings("serial")
 public class MyContainer implements Serializable
 {
 	public Hotel hotel[] = new Hotel[100];

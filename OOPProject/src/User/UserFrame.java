@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.event.*;
+import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class UserFrame extends JFrame {
@@ -58,10 +59,11 @@ public class UserFrame extends JFrame {
 		
 		JLabel IntroLabel = new JLabel("Hello "+User.findName(username)+",");
 		IntroLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
-		IntroLabel.setBounds(33, 87, 158, 24);
+		IntroLabel.setBounds(33, 87, 439, 24);
 		Panel.add(IntroLabel);
 		
 		JPanel panel3 = new JPanel();
+		panel3.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
@@ -73,7 +75,7 @@ public class UserFrame extends JFrame {
 			}
 		});
 		panel3.setBackground(new Color(250, 235, 215));
-		panel3.setBounds(762, 11, 112, 51);
+		panel3.setBounds(686, 11, 188, 51);
 		Panel.add(panel3);
 		panel3.setLayout(null);
 		
@@ -93,7 +95,7 @@ public class UserFrame extends JFrame {
 		Image img2=new ImageIcon(this.getClass().getResource("/User.png")).getImage();
 		User_label.setIcon(new ImageIcon(img2));
 		User_label.setToolTipText("User Menu");
-		User_label.setBounds(10, 11, 92, 32);
+		User_label.setBounds(10, 11, 168, 32);
 		panel3.add(User_label);
 		
 		
@@ -140,7 +142,7 @@ public class UserFrame extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 255, 255));
-		panel_3.setBounds(10, 54, 92, 83);
+		panel_3.setBounds(10, 54, 168, 83);
 		panel3.add(panel_3);
 			
 	}
