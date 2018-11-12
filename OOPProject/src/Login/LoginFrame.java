@@ -3,7 +3,6 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.border.EmptyBorder;
-import User.UserFrame;
 
 
 @SuppressWarnings("serial")
@@ -67,8 +66,8 @@ public class LoginFrame extends JFrame {
 					{
 						errLabel.setText("Successful Login.");
 						JOptionPane.showMessageDialog(null,errLabel);
-						UserFrame obj=new UserFrame(UserNameField.getText());
-						obj.setVisible(true);
+						//UserFrame obj=new UserFrame(UserNameField.getText());
+						//obj.setVisible(true);
 						dispose();
 					}
 					else
@@ -100,8 +99,8 @@ public class LoginFrame extends JFrame {
 				{
 					errLabel.setText("Successful Login.");
 					JOptionPane.showMessageDialog(null,errLabel);
-					UserFrame obj=new UserFrame(UserNameField.getText());
-					obj.setVisible(true);
+					//UserFrame obj=new UserFrame(UserNameField.getText());
+					//obj.setVisible(true);
 					dispose();
 				}
 				else
