@@ -21,13 +21,15 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
+import com.toedter.calendar.JDateChooser;
+
+import Admin.MyDate;
 
 @SuppressWarnings("serial")
 public class RegisterFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField Name_Field;
-	private JTextField DOB_Field;
 	private JTextField Email_Field;
 	private JTextField UName_Field;
 	private JPasswordField FirstPass_Field;
@@ -118,11 +120,6 @@ public class RegisterFrame extends JFrame {
 		contentPane.add(Name_Field);
 		Name_Field.setColumns(10);
 		
-		DOB_Field = new JTextField();
-		DOB_Field.setBounds(306, 219, 204, 29);
-		contentPane.add(DOB_Field);
-		DOB_Field.setColumns(10);
-		
 		JTextArea Add_Field = new JTextArea();
 		Add_Field.setForeground(new Color(0, 0, 0));
 		Add_Field.setBounds(305, 275, 204, 53);
@@ -132,6 +129,10 @@ public class RegisterFrame extends JFrame {
 		Email_Field.setBounds(306, 355, 204, 29);
 		contentPane.add(Email_Field);
 		Email_Field.setColumns(10);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(306, 219, 204, 29);
+		contentPane.add(dateChooser);
 		
 		UName_Field = new JTextField();
 		UName_Field.addKeyListener(new KeyAdapter() {
@@ -174,7 +175,7 @@ public class RegisterFrame extends JFrame {
 				
 				if(e.getKeyCode()==KeyEvent.VK_ENTER)
 				{
-					int b=User.register(Name_Field.getText(),DOB_Field.getText(),Add_Field.getText(),Email_Field.getText(),UName_Field.getText(),FirstPass_Field.getText(),RePass_Field.getText());
+					int b=User.register(Name_Field.getText(),MyDate.convToSqlDate(dateChooser.getDate()),Add_Field.getText(),Email_Field.getText(),UName_Field.getText(),FirstPass_Field.getText(),RePass_Field.getText());
 					if(b==0)
 					{
 						errLabel.setText("No Field should be left vacant");
@@ -216,7 +217,7 @@ public class RegisterFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				int a=User.register(Name_Field.getText(),DOB_Field.getText(),Add_Field.getText(),Email_Field.getText(),UName_Field.getText(),FirstPass_Field.getText(),RePass_Field.getText());
+				int a=User.register(Name_Field.getText(),MyDate.convToSqlDate(dateChooser.getDate()),Add_Field.getText(),Email_Field.getText(),UName_Field.getText(),FirstPass_Field.getText(),RePass_Field.getText());
 				if(a==0)
 				{
 					errLabel.setText("No Field should be left vacant");
@@ -278,6 +279,8 @@ public class RegisterFrame extends JFrame {
 		label_3.setFont(new Font("Consolas", Font.ITALIC, 23));
 		label_3.setBounds(290, 11, 399, 65);
 		contentPane.add(label_3);
+		
+		
 
 	}
 }

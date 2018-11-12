@@ -8,6 +8,9 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.event.*;
 import javax.swing.border.EtchedBorder;
+
+import Admin.AboutUsFrame;
+
 import javax.swing.border.BevelBorder;
 
 @SuppressWarnings("serial")
@@ -22,7 +25,7 @@ public class UserFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserFrame frame = new UserFrame("frame");
+					UserFrame frame = new UserFrame("raghu");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -153,6 +156,11 @@ public class UserFrame extends JFrame {
 			public void mouseExited(MouseEvent me) {
 				panel_6.setBackground(norm);
 			}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new MyBookingFrame(username).setVisible(true);
+				dispose();
+			}
 		});
 		panel_6.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_6.setBackground(new Color(255, 218, 185));
@@ -181,6 +189,13 @@ public class UserFrame extends JFrame {
 			public void mouseExited(MouseEvent me) {
 				panel_7.setBackground(norm);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				User.removeAccount(username);
+				JOptionPane.showMessageDialog(null, "Account Succesfully removed", "Information", JOptionPane.INFORMATION_MESSAGE);
+				new LoginFrame().setVisible(true);
+				dispose();
+			}
 		});
 		panel_7.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_7.setBackground(new Color(255, 218, 185));
@@ -208,6 +223,11 @@ public class UserFrame extends JFrame {
 			}
 			public void mouseExited(MouseEvent me) {
 				panel_8.setBackground(norm);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new AboutUsFrame(username).setVisible(true);
+				dispose();
 			}
 		});
 		panel_8.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -243,6 +263,11 @@ public class UserFrame extends JFrame {
 			public void mouseExited(MouseEvent me) {
 				panel_5.setBackground(norm);
 			}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new SettingsFrame(username).setVisible(true);
+				dispose();
+			}
 		});
 		panel_5.setLayout(null);
 		panel_5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -274,6 +299,12 @@ public class UserFrame extends JFrame {
 		panel_4.setLayout(null);
 		
 		JButton btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new BookingFrame(username).setVisible(true);
+				dispose();
+			}
+		});
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setBounds(165, 302, 295, 58);
 		panel_4.add(btnNewButton);
