@@ -11,6 +11,9 @@ import java.awt.event.*;
 import java.sql.ResultSet;
 
 import javax.swing.border.LineBorder;
+
+import Hotel.Hotel;
+import Hotel.MyContainer;
 @SuppressWarnings("serial")
 public class MyBookingFrame extends JFrame {
 
@@ -25,7 +28,7 @@ public class MyBookingFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MyBookingFrame frame = new MyBookingFrame("Ankit");
+					MyBookingFrame frame = new MyBookingFrame("raghu");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -164,6 +167,11 @@ public class MyBookingFrame extends JFrame {
 		upbooking_panel.setLayout(null);
 		
 		JButton btnMdifyBooking = new JButton("Modify Booking");
+		btnMdifyBooking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new ModifyFrame(getRefno1(),username).setVisible(true);dispose();
+			}
+		});
 		btnMdifyBooking.setForeground(Color.WHITE);
 		btnMdifyBooking.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnMdifyBooking.setBackground(new Color(106, 90, 205));
@@ -172,6 +180,14 @@ public class MyBookingFrame extends JFrame {
 		upbooking_panel.add(btnMdifyBooking);
 		
 		JButton btnCancelBooking = new JButton("Cancel Booking");
+		btnCancelBooking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Confirm Cancellation", "Information", JOptionPane.INFORMATION_MESSAGE);
+				Hotel hotel = MyContainer.getHotel(getRefno1());
+				hotel.cancelBooking(getRefno1());
+				upBook(username);
+			}
+		});
 		btnCancelBooking.setForeground(Color.WHITE);
 		btnCancelBooking.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnCancelBooking.setBackground(new Color(106, 90, 205));
@@ -263,8 +279,12 @@ public class MyBookingFrame extends JFrame {
 		        table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				int a=Bookingdisplays.statusShow(getRefno1());
+				if(a!=1)
+				{
 				btnMdifyBooking.setVisible(true);
 				btnCancelBooking.setVisible(true);
+				}
 			}
 		});
 		scrollPane.setViewportView(table);
@@ -288,8 +308,11 @@ public class MyBookingFrame extends JFrame {
     prevtable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int b=Bookingdisplays.statusShow(getRefno());
 				int c=getRefno();
 				int a=Bookingdisplays.checkFeedback(c);
+				if(b==2)
+				{
 				if(a==1)
 				{
 					NoFeedback.setVisible(false);
@@ -300,6 +323,7 @@ public class MyBookingFrame extends JFrame {
 					NoFeedback.setVisible(true);
 					Feedbackbtn.setVisible(false);
 				}
+				}
 					
 			}
 		});
@@ -309,22 +333,29 @@ public class MyBookingFrame extends JFrame {
 	void upBook(String username)
 	{
 		ResultSet rs;
-		rs=Bookingdisplays.Upbooking("Ankit");
+		rs=Bookingdisplays.Upbooking(username);
 		table.setModel(DbUtils.resultSetToTableModel(rs));
 		MyConnection.closeConnection();
 	}
 	void prevBook(String username)
 	{
 		ResultSet rs;
-		rs=Bookingdisplays.Prevbooking("Ankit");
+		rs=Bookingdisplays.Prevbooking(username);
 		prevtable.setModel(DbUtils.resultSetToTableModel(rs));
 		MyConnection.closeConnection();
 	}
 	int getRefno()
 	{
 		int b=prevtable.getSelectedRow();
-		String s =prevtable.getModel().getValueAt(b,0).toString();
-		int c=Integer.parseInt(s);
+		String s = prevtable.getModel().getValueAt(b,0).toString();
+		int c = Integer.parseInt(s);
+		return c;
+	}
+	int getRefno1()
+	{
+		int b=table.getSelectedRow();
+		String s = table.getModel().getValueAt(b,0).toString();
+		int c = Integer.parseInt(s);
 		return c;
 	}
 }

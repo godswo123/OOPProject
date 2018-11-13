@@ -2,6 +2,9 @@ package Hotel;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.sql.Date;
 
 import Admin.MyDate;
@@ -9,24 +12,22 @@ import Login.MyConnection;
 import User.Booking;
 
 
-@SuppressWarnings("serial")
 public class Hotel implements Serializable
 {
 	private int roomsOccupied[] = new int[10000];
-	private String hotelName;
-	private String location;
+	public String hotelName;
+	public String location;
 	private int maxNoOfRooms;
 	private double rating = 0;
-	@SuppressWarnings("unused")
 	private String s[] = new String[1000];
 	private int noOfUserFeedbacks;
-	private int maxNoOfPeoplePerRoom;
-	@SuppressWarnings("unused")
-	private double pricePerRoom;
+	public int maxNoOfPeoplePerRoom;
+	public double pricePerRoom;
 	private int waitQueue[] = new int[1000];
 	private int waitQueueSize;
+	public boolean amenities[];
 	
-	public Hotel(String hotelname, String location, int maxNoOfRooms, int maxNoOfPeoplePerRoom, double pricePerRoom)
+	public Hotel(String hotelname, String location, int maxNoOfRooms, int maxNoOfPeoplePerRoom, double pricePerRoom, boolean amenities[])
 	{
 		this.hotelName = hotelname;
 		this.location = location;
@@ -35,6 +36,7 @@ public class Hotel implements Serializable
 		this.pricePerRoom = pricePerRoom;
 		this.waitQueueSize = 0;
 		this.noOfUserFeedbacks = 0;
+		this.amenities = amenities;
 	}
 	
 	public boolean checkRoomAvailability(Date checkIn, Date checkOut, int noOfRoomsRequired, int noOfPeople)
@@ -77,6 +79,7 @@ public class Hotel implements Serializable
 		
 		String query = "INSERT INTO bookinginfo (`username`, `refno`, `location`, `hotel`, `checkin`, `checkout`, `status`, `noofrooms`, `noofpeople`)" 
 					+ "VALUES ('"+username+"', '"+Booking.getRefno()+"', '"+location+"', '"+hotelName+"', '"+checkIn+"', '"+checkOut+"', 'confirmed', '"+noOfRoomsRequired+"', '"+noOfPeople+"')";
+		System.out.println("**");
 		MyConnection.getConnection();
 		MyConnection.updateQuery(query);
 		MyConnection.closeConnection();
@@ -158,7 +161,7 @@ public class Hotel implements Serializable
 		{
 			if(checkRoomAvailability(newCheckIn, newCheckOut, newNoOfRoomsRequired, newNoOfPeople))
 			{
-				String query = "UPDATE bookinginfo SET `checkin` = '"+newCheckIn+"', 'checkout` = '"+newCheckOut+"', `status` = 'confirmed', `noofrooms` = '"+newNoOfRoomsRequired+"', `noofpeople` = '"+newNoOfPeople+"' WHERE (`refno` = '"+refno+"')";
+				String query = "UPDATE bookinginfo SET checkin = '"+newCheckIn+"', checkout = '"+newCheckOut+"', status = 'confirmed', noofrooms = "+newNoOfRoomsRequired+", noofpeople = "+newNoOfPeople+" WHERE (refno = "+refno+")";
 				MyConnection.getConnection();
 				MyConnection.updateQuery(query);
 				MyConnection.closeConnection();
@@ -252,7 +255,7 @@ public class Hotel implements Serializable
 	
 	public void takeFeedback(int refno, String feedback, int userrating)
 	{
-		String query = "UPDATE bookinginfo SET feedback = '"+feedback+"' WHERE `refno` = '" + refno + "'";
+		String query = "UPDATE bookinginfo SET feedback = '"+feedback+"'" +", rating = "+userrating+" WHERE `refno` = '" + refno + "'";
 		
 		rating *= noOfUserFeedbacks;
 		rating += userrating;
@@ -268,4 +271,103 @@ public class Hotel implements Serializable
 		return rating;
 	}
 	
+	public ArrayList<String> getFeedback()
+	{
+		MyConnection.getConnection();
+		ArrayList<String> feedback = new ArrayList<String>();
+		String query = "SELECT username,feedback,rating,checkout FROM bookinginfo WHERE location = '"+location+"' AND hotel = '"+hotelName+"' AND status = 'completed'";
+		ResultSet rs = MyConnection.executeQuery(query);
+		try
+		{
+			while(rs.next())
+			{
+				feedback.add(rs.getString(1));
+				feedback.add(rs.getString(2));
+				feedback.add(rs.getString(3));
+				feedback.add(rs.getString(4));
+			}
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return feedback;
+	}
+	
+	public boolean modifyCheck(int refno, Date newCheckIn, Date newCheckOut, int newNoOfRoomsRequired, int newNoOfPeople)
+	{
+		
+		MyConnection.getConnection();
+		String query = "SELECT checkin,checkout,noofrooms,noofpeople FROM bookinginfo WHERE refno = "+refno;
+		ResultSet rSet = MyConnection.executeQuery(query);
+		java.sql.Date previousCheckIn = null;
+		java.sql.Date previousCheckOut = null;
+		int prevNoOfRoomsRequired = 0;
+		int prevNoOfPeople = 0;
+		
+		try
+		{
+			if(rSet.next())
+			{
+				previousCheckIn = rSet.getDate(1);
+				previousCheckOut = rSet.getDate(2);
+				prevNoOfRoomsRequired = rSet.getInt(3);
+				prevNoOfPeople = rSet.getInt(4);
+			}
+		} 
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(prevNoOfPeople);
+		int idxPreviousCheckIn = MyDate.getIndex(previousCheckIn);
+		int idxPreviousCheckOut = MyDate.getIndex(previousCheckOut);
+		int idxNewCheckIn = MyDate.getIndex(newCheckIn);
+		Date currDate = MyDate.getCurrDate();
+		System.out.println(currDate);
+		int idxCurrDate = MyDate.getIndex(currDate);
+		if(idxCurrDate>=idxPreviousCheckIn-3)
+			return false;
+		if(idxNewCheckIn<=idxCurrDate)
+			return false;
+		int flag = 0,idx = 0;
+		for(int i=idxPreviousCheckIn;i<=idxPreviousCheckOut;i++)
+		{
+			if(roomsOccupied[i]<prevNoOfRoomsRequired)
+			{
+				flag = 1;
+				idx  = i;
+				break;
+			}
+			roomsOccupied[i] -= prevNoOfRoomsRequired;
+		}
+		if(flag==1) //Resetting array as it is since modification not possible.
+		{
+			for(int i=idxPreviousCheckIn;i<idx;i++)
+			{
+				roomsOccupied[i] += prevNoOfRoomsRequired;
+			}
+			return false;
+		}
+		else
+		{
+			if(checkRoomAvailability(newCheckIn, newCheckOut, newNoOfRoomsRequired, newNoOfPeople))
+			{
+				for(int i=idxPreviousCheckIn;i<=idxPreviousCheckOut;i++)//Reset array.
+				{
+					roomsOccupied[i] += prevNoOfRoomsRequired;
+				}
+				return true;
+			}
+			else 
+			{
+				///Reseting array.
+				for(int i=idxPreviousCheckIn;i<=idxPreviousCheckOut;i++)
+					roomsOccupied[i] += prevNoOfRoomsRequired;
+				return false;
+			}
+		}
+			
+	}
 }

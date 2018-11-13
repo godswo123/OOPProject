@@ -37,9 +37,9 @@ public class MyDate
 		return currDate;
 	}
 	
-	public static void setDate(int year, int month, int date)
+	public static void setDate(Date date)
 	{
-		currDate = getDate(year, month, date);
+		currDate = date;
 		try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("currdate.txt")))
 		{
 			objectOutputStream.writeObject(currDate);
@@ -57,5 +57,10 @@ public class MyDate
 		long l2 = d2.getTime();
 		int ans = (int)((l1-l2)/MILLISECONDS_PER_DAY);
 		return ans;
+	}
+	
+	public static java.sql.Date convToSqlDate(java.util.Date udate)
+	{
+		return new java.sql.Date(udate.getTime());
 	}
 }

@@ -59,7 +59,6 @@ public class FeedbackFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public FeedbackFrame(String username,int refno) {
-		MyContainer.reset();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(180, 30, 900, 700);
 		contentPane = new JPanel();

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.border.EmptyBorder;
 
+import Admin.AdminFrame;
+import User.UserFrame;
+
 
 @SuppressWarnings("serial")
 public class LoginFrame extends JFrame {
@@ -45,13 +48,15 @@ public class LoginFrame extends JFrame {
 		setTitle("BookMyHotel");
 		
 		UserNameField = new JTextField();
-		UserNameField.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		UserNameField.setHorizontalAlignment(SwingConstants.CENTER);
+		UserNameField.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		UserNameField.setBounds(554, 283, 129, 30);
 		contentPane.add(UserNameField);
 		UserNameField.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordField.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		passwordField.addKeyListener(new KeyAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -66,9 +71,18 @@ public class LoginFrame extends JFrame {
 					{
 						errLabel.setText("Successful Login.");
 						JOptionPane.showMessageDialog(null,errLabel);
-						//UserFrame obj=new UserFrame(UserNameField.getText());
-						//obj.setVisible(true);
-						dispose();
+						String username = UserNameField.getText();
+						if(username.equals("raghu")||username.equals("ankit")||username.equals("nihal")||username.equals("simran"))
+						{
+							new AdminFrame(username).setVisible(true);
+							dispose();
+						}
+						else
+						{
+							UserFrame obj=new UserFrame(username);
+							obj.setVisible(true);
+							dispose();
+						}
 					}
 					else
 					{
@@ -82,7 +96,6 @@ public class LoginFrame extends JFrame {
 		contentPane.add(passwordField);
 		
 		
-		//ImageIcon i1=new ImageIcon("login.png");
 		JButton btnLogin = new JButton("Login");
 		Image img1=new ImageIcon(this.getClass().getResource("/login.png")).getImage();
 		btnLogin.setIcon(new ImageIcon(img1));
@@ -99,9 +112,18 @@ public class LoginFrame extends JFrame {
 				{
 					errLabel.setText("Successful Login.");
 					JOptionPane.showMessageDialog(null,errLabel);
-					//UserFrame obj=new UserFrame(UserNameField.getText());
-					//obj.setVisible(true);
-					dispose();
+					String username = UserNameField.getText();
+					if(username.equals("raghu")||username.equals("ankit")||username.equals("nihal")||username.equals("simran"))
+					{
+						new AdminFrame(username).setVisible(true);
+						dispose();
+					}
+					else
+					{
+						UserFrame obj=new UserFrame(username);
+						obj.setVisible(true);
+						dispose();
+					}
 				}
 				else
 				{

@@ -10,7 +10,7 @@ public class Bookingdisplays {
 		ResultSet rs=null;
 		try {
 			
-			String query = "SELECT refno,location,hotel,checkin,checkout,noofrooms,noofpeople,status FROM bookinginfo WHERE Userinfo='"+username+"' and status ='UPCOMING'";
+			String query = "SELECT refno,location,hotel,checkin,checkout,noofrooms,noofpeople,status FROM bookinginfo WHERE username='"+username+"' and (status ='CONFIRMED' or 'WAITING')";
 			rs = MyConnection.executeQuery(query);
 			return rs;
 		}catch(Exception e)
@@ -25,13 +25,41 @@ public class Bookingdisplays {
 	ResultSet rs=null;
 	try {
 		
-		String query = "SELECT refno,location,hotel,checkin,checkout,noofrooms,noofpeople,status FROM bookinginfo WHERE Userinfo='"+username+"' and status !='UPCOMING'";
+		String query = "SELECT refno,location,hotel,checkin,checkout,noofrooms,noofpeople,status FROM bookinginfo WHERE username='"+username+"' and (status ='COMPLETED' or status='CANCELLED' or status='INCOMPLETE')";
 		rs = MyConnection.executeQuery(query);
 		return rs;
 	}catch(Exception e)
 	{
 		return rs;
 	}
+	}
+	
+	public static int statusShow(int refno)
+	{
+		MyConnection.getConnection();
+		ResultSet rs=null;
+		try {
+		String query="select status from bookinginfo where refno="+refno;
+		rs = MyConnection.executeQuery(query);
+		if(rs.next())
+		{
+			if(rs.getString(1).equals("WAITING"))
+			{
+				return 1;
+			}
+			if(rs.getString(1).equals("COMPLETED"))
+					return 2;
+			else
+				return 0;
+		}
+		else
+			return 0;
+		
+		}catch(Exception e)
+		{
+			return 0;
+		}
+		
 	}
 	
 	public static int checkFeedback(int a)
@@ -44,12 +72,8 @@ public class Bookingdisplays {
 		rs = MyConnection.executeQuery(query);
 		if(rs.next())
 		{
-			System.out.println(a);
-			System.out.println(rs.getString(1).equals(null));
-			System.out.println(a);
 			if(rs.getString(1).equals(str))
 			{
-				System.out.println(5);
 				return 1;
 			}
 			else
