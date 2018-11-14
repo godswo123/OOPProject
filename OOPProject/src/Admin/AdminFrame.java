@@ -349,7 +349,7 @@ public class AdminFrame extends JFrame {
 		lblAmenitiesProvided.setBounds(573, 23, 188, 43);
 		addLocation.add(lblAmenitiesProvided);
 		
-		JCheckBox chckbxCompBr = new JCheckBox("Complementary BreakFast");
+		JCheckBox chckbxCompBr = new JCheckBox("Complementary Breakfast");
 		chckbxCompBr.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		chckbxCompBr.setBackground(new Color(255, 218, 185));
 		chckbxCompBr.setBounds(573, 140, 238, 43);

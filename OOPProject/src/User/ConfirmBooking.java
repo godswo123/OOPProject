@@ -2,11 +2,15 @@ package User;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.math.BigInteger;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Admin.MyDate;
 import Hotel.Hotel;
 import Hotel.MyContainer;
 import Login.MyConnection;
@@ -21,7 +26,10 @@ import Login.MyConnection;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ConfirmBooking extends JFrame
 {
@@ -43,7 +51,7 @@ public class ConfirmBooking extends JFrame
 			{
 				try
 				{
-					ConfirmBooking frame = new ConfirmBooking(null,hotel,isAvailable);
+					ConfirmBooking frame = new ConfirmBooking(null,hotel,isAvailable,null);
 					frame.setVisible(true);
 				} catch (Exception e)
 				{
@@ -56,7 +64,7 @@ public class ConfirmBooking extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public ConfirmBooking(MyContainer myContainer,Hotel hotel, boolean isAvailable)
+	public ConfirmBooking(MyContainer myContainer,Hotel hotel, boolean isAvailable,JFrame prevFrame)
 	{
 		this.hotel = hotel;
 		this.isAvailable = isAvailable;
@@ -67,6 +75,29 @@ public class ConfirmBooking extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		DropDown dropDown = new DropDown(Booking.username, this);
+		contentPane.add(dropDown);
+		contentPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				dropDown.resize();
+			}
+		});
+		
+		ImageIcon backIcon = new ImageIcon(getClass().getResource("/back.png"));
+		JLabel lblBack = new JLabel("");
+		lblBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				prevFrame.setVisible(true);
+				dispose();
+			}
+		});
+		lblBack.setBounds(655, 13, 40, 52);
+		contentPane.add(lblBack);
+		lblBack.setIcon(backIcon);
+		lblBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		//BookMyHotel label
 		JLabel lblBookMyHotel = new JLabel("BookMyHotel");
@@ -160,13 +191,13 @@ public class ConfirmBooking extends JFrame
 		label_9.setBounds(245, 295, 138, 29);
 		panel.add(label_9);
 		
-		JLabel lblPrice = new JLabel("Price");
+		JLabel lblPrice = new JLabel("Total Price");
 		lblPrice.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrice.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
 		lblPrice.setBounds(12, 336, 183, 26);
 		panel.add(lblPrice);
 		
-		JLabel label_2 = new JLabel(Double.toString(hotel.pricePerRoom*Booking.noOfRooms));
+		JLabel label_2 = new JLabel("Rs. "+Double.toString(hotel.pricePerRoom*Booking.noOfRooms*(MyDate.getIndex(Booking.checkOutDate)-MyDate.getIndex(Booking.checkInDate)+1)));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setFont(new Font("Roboto", Font.PLAIN, 20));
 		label_2.setBounds(245, 336, 138, 29);
@@ -177,15 +208,50 @@ public class ConfirmBooking extends JFrame
 		lblEnterAadharNumber.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
 		contentPane.add(lblEnterAadharNumber);
 		
+		JLabel errLabel = new JLabel("");
+		errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		UIManager.put("Button.background", Color.white);
+		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					String aadhar = textField.getText();
+					if(!(aadhar.matches("[0-9]+")&&aadhar.length()==12))
+					{
+						errLabel.setText("Enter valid Aadhar number.");
+						JOptionPane.showMessageDialog(null, errLabel);
+					}
+					else
+					{
+						if(isAvailable)
+						{
+							hotel.bookRooms(Booking.username, Booking.checkInDate, Booking.checkOutDate, Booking.noOfRooms, Booking.noOfPeople);
+							MyContainer.storeContainer(myContainer);
+							errLabel.setText("Successfully booked.");
+							JOptionPane.showMessageDialog(null, errLabel);
+							new UserFrame(Booking.username).setVisible(true);
+							Fobj.dispose();
+						}
+						else
+						{
+							hotel.enrollForWaitList(Booking.username, Booking.checkInDate, Booking.checkOutDate, Booking.noOfRooms, Booking.noOfPeople);
+							MyContainer.storeContainer(myContainer);
+							errLabel.setText("Successfully enrolled.");
+							JOptionPane.showMessageDialog(null, errLabel);
+							new UserFrame(Booking.username).setVisible(true);
+							Fobj.dispose();
+						}
+					}
+				}
+			}
+		});
 		textField.setFont(new Font("Roboto", Font.PLAIN, 17));
 		textField.setBounds(517, 283, 320, 34);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
-		JLabel errLabel = new JLabel("");
-		errLabel.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		UIManager.put("Button.background", Color.white);
 		
 		JButton btn = new JButton();
 		btn.setBounds(612, 354, 124, 42);
@@ -215,6 +281,7 @@ public class ConfirmBooking extends JFrame
 						MyContainer.storeContainer(myContainer);
 						errLabel.setText("Successfully booked.");
 						JOptionPane.showMessageDialog(null, errLabel);
+						new UserFrame(Booking.username).setVisible(true);
 						Fobj.dispose();
 					}
 					else
@@ -223,6 +290,7 @@ public class ConfirmBooking extends JFrame
 						MyContainer.storeContainer(myContainer);
 						errLabel.setText("Successfully enrolled.");
 						JOptionPane.showMessageDialog(null, errLabel);
+						new UserFrame(Booking.username).setVisible(true);
 						Fobj.dispose();
 					}
 				}

@@ -275,7 +275,7 @@ public class Hotel implements Serializable
 	{
 		MyConnection.getConnection();
 		ArrayList<String> feedback = new ArrayList<String>();
-		String query = "SELECT username,feedback,rating,checkout FROM bookinginfo WHERE location = '"+location+"' AND hotel = '"+hotelName+"' AND status = 'COMPLETED'";
+		String query = "SELECT username,feedback,rating,checkout FROM bookinginfo WHERE location = '"+location+"' AND hotel = '"+hotelName+"' AND status = 'COMPLETED' ORDER BY checkout DESC";
 		ResultSet rs = MyConnection.executeQuery(query);
 		try
 		{
@@ -320,12 +320,10 @@ public class Hotel implements Serializable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(prevNoOfPeople);
 		int idxPreviousCheckIn = MyDate.getIndex(previousCheckIn);
 		int idxPreviousCheckOut = MyDate.getIndex(previousCheckOut);
 		int idxNewCheckIn = MyDate.getIndex(newCheckIn);
 		Date currDate = MyDate.getCurrDate();
-		System.out.println(currDate);
 		int idxCurrDate = MyDate.getIndex(currDate);
 		if(idxCurrDate>=idxPreviousCheckIn-3)
 			return false;
@@ -348,6 +346,7 @@ public class Hotel implements Serializable
 			{
 				roomsOccupied[i] += prevNoOfRoomsRequired;
 			}
+			//System.out.println(1);
 			return false;
 		}
 		else
@@ -365,6 +364,7 @@ public class Hotel implements Serializable
 				///Reseting array.
 				for(int i=idxPreviousCheckIn;i<=idxPreviousCheckOut;i++)
 					roomsOccupied[i] += prevNoOfRoomsRequired;
+				//System.out.println(2);
 				return false;
 			}
 		}
