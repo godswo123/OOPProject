@@ -298,39 +298,24 @@ public class UserFrame extends JFrame {
 		Panel.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JButton btnNewButton = new JButton("");
+		ImageIcon hotelimg = new ImageIcon(getClass().getResource("/hotelimg2.png"));
+		
+		JButton btnNewButton = new JButton("BOOK NOW");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				new BookingFrame(username).setVisible(true);
 				dispose();
 			}
 		});
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setBounds(165, 302, 295, 58);
+		btnNewButton.setBackground(new Color(255, 250, 250));
+		btnNewButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		btnNewButton.setBounds(232, 272, 181, 47);
 		panel_4.add(btnNewButton);
-		btnNewButton.setFont(new Font("Trebuchet MS", Font.ITALIC, 28));
-		btnNewButton.setIcon(searchimg);
-		JLabel hotelImg = new JLabel("");
-		hotelImg.setBounds(12, 159, 615, 339);
-		panel_4.add(hotelImg);
-		hotelImg.setIcon(hotelImgIcon);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 218, 185));
-		panel_1.setBounds(597, 0, 42, 135);
-		panel_4.add(panel_1);
-		
-		JPanel panel_9 = new JPanel();
-		panel_9.setBackground(new Color(255, 218, 185));
-		panel_9.setBounds(555, 0, 42, 83);
-		panel_4.add(panel_9);
-		
-		JLabel lblNewLabel = new JLabel("Welcome !!!");
-		lblNewLabel.setForeground(new Color(255, 0, 0));
-		lblNewLabel.setFont(new Font("Pristina", Font.BOLD, 60));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(96, 41, 401, 83);
-		panel_4.add(lblNewLabel);
+		JLabel lblimg = new JLabel("");
+		lblimg.setBounds(-59, 0, 698, 498);
+		panel_4.add(lblimg);
+		lblimg.setIcon(hotelimg);
 		
 		Panel.addMouseListener(new MouseAdapter() {
 			@Override
