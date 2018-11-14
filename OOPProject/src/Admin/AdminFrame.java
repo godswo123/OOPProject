@@ -1,24 +1,17 @@
 package Admin;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import Login.LoginFrame;
 import User.UserFrame;
 
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
@@ -33,12 +26,7 @@ import com.toedter.calendar.JDateChooser;
 
 import Hotel.MyContainer;
 
-import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
 import javax.swing.JTextField;
-import javax.swing.border.MatteBorder;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
 import javax.swing.JCheckBox;
 
 public class AdminFrame extends JFrame {
