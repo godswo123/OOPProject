@@ -2,6 +2,7 @@ package User;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -17,6 +18,9 @@ import Hotel.MyContainer;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class HotelDetails extends JFrame
@@ -58,6 +62,9 @@ public class HotelDetails extends JFrame
 		this.isAvailable = isAvailable;
 		location = Booking.getLocation();
 		
+		ImageIcon okIcon = new ImageIcon(getClass().getResource("/check.png"));
+		ImageIcon noIcon = new ImageIcon(getClass().getResource("/cross.png"));
+		
 		Hotel hotelObj = myContainer.getHotel(hotelName, location);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,6 +75,19 @@ public class HotelDetails extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		ImageIcon backIcon = new ImageIcon(getClass().getResource("/back.png"));
+		JLabel lblBack = new JLabel("");
+		lblBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
+		lblBack.setBounds(551, 17, 40, 52);
+		contentPane.add(lblBack);
+		lblBack.setIcon(backIcon);
+		lblBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		//hotelName label
 		JLabel lblHotel = new JLabel(hotelName);
 		lblHotel.setBounds(23, 11, 320, 65);
@@ -77,44 +97,60 @@ public class HotelDetails extends JFrame
 		contentPane.add(lblHotel);
 		
 		//amenities label and panel
-
-		ImageIcon tick = new ImageIcon("tick.png");
-		ImageIcon cross = new ImageIcon("cross.png");
+		JLabel label = new JLabel("");
+		label.setBounds(263, 112, 40, 52);
+		contentPane.add(label);
+		label.setIcon(okIcon);
 		
-		JLabel lblAmenities_1 = new JLabel("Amenities 1");
+		JLabel label_1 = new JLabel("");
+		label_1.setBounds(263, 149, 40, 52);
+		contentPane.add(label_1);
+		label_1.setIcon(okIcon);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setBounds(263, 186, 40, 52);
+		contentPane.add(label_2);
+		label_2.setIcon(okIcon);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setBounds(263, 227, 40, 52);
+		contentPane.add(label_3);
+		label_3.setIcon(okIcon);
+		
+		JLabel lblAmenities_1 = new JLabel("Free WiFi");
 		lblAmenities_1.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblAmenities_1.setBounds(23, 126, 112, 24);
+		lblAmenities_1.setBounds(23, 126, 179, 24);
 		if(hotelObj.amenities[0]==true)
-			lblAmenities_1.setIcon(tick);
+			label.setIcon(okIcon);
 		else
-			lblAmenities_1.setIcon(cross);
+			label.setIcon(noIcon);
 		contentPane.add(lblAmenities_1);
 		
-		JLabel lblAmenities_2 = new JLabel("Amenities 2");
+		JLabel lblAmenities_2 = new JLabel("Complementary Breakfast");
 		lblAmenities_2.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblAmenities_2.setBounds(23, 163, 112, 24);
+		lblAmenities_2.setBounds(23, 163, 280, 24);
 		if(hotelObj.amenities[1]==true)
-			lblAmenities_2.setIcon(tick);
+			label_1.setIcon(okIcon);
 		else
-			lblAmenities_2.setIcon(cross);
+			label_1.setIcon(noIcon);
 		contentPane.add(lblAmenities_2);
 		
-		JLabel lblAmenities_3 = new JLabel("Amenities 3");
+		JLabel lblAmenities_3 = new JLabel("Swimming Pool");
 		lblAmenities_3.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblAmenities_3.setBounds(23, 200, 112, 24);
+		lblAmenities_3.setBounds(23, 200, 190, 24);
 		if(hotelObj.amenities[2]==true)
-			lblAmenities_3.setIcon(tick);
+			label_2.setIcon(okIcon);
 		else
-			lblAmenities_3.setIcon(cross);
+			label_2.setIcon(noIcon);
 		contentPane.add(lblAmenities_3);
 		
-		JLabel lblAmenities_4 = new JLabel("Amenities 4");
+		JLabel lblAmenities_4 = new JLabel("Free Parking");
 		lblAmenities_4.setFont(new Font("Roboto", Font.PLAIN, 20));
 		lblAmenities_4.setBounds(23, 241, 112, 24);
 		if(hotelObj.amenities[3]==true)
-			lblAmenities_4.setIcon(tick);
+			label_3.setIcon(okIcon);
 		else
-			lblAmenities_4.setIcon(cross);
+			label_3.setIcon(noIcon);
 		contentPane.add(lblAmenities_4);
 		
 		JLabel lblAmenities = new JLabel("Amenities");
@@ -154,6 +190,16 @@ public class HotelDetails extends JFrame
 		btn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(btn);
 		
+		JLabel lblRating = new JLabel("");
+		lblRating.setForeground(new Color(102, 0, 51));
+		lblRating.setFont(new Font("Consolas", Font.BOLD, 30));
+		lblRating.setBackground(Color.WHITE);
+		lblRating.setBounds(285, 11, 167, 65);
+		Double rate = hotelObj.getRating();
+		DecimalFormat dec = new DecimalFormat("#0.0");
+		lblRating.setText("("+dec.format(rate)+"/5.0)");
+		contentPane.add(lblRating);
+		
 		if(isAvailable==true)
 		{
 			btn.setText("Book");
@@ -161,7 +207,8 @@ public class HotelDetails extends JFrame
 			{
 				public void actionPerformed(ActionEvent arg0)
 				{
-					(new ConfirmBooking(myContainer,hotelObj,true)).setVisible(true);
+					(new ConfirmBooking(myContainer,hotelObj,true,prevFrame)).setVisible(true);
+					prevFrame.setVisible(false);
 					Fobj.dispose();
 				}
 			});
@@ -174,7 +221,8 @@ public class HotelDetails extends JFrame
 			{
 				public void actionPerformed(ActionEvent arg0)
 				{
-					(new ConfirmBooking(myContainer,hotelObj,false)).setVisible(true);
+					(new ConfirmBooking(myContainer,hotelObj,false,prevFrame)).setVisible(true);
+					prevFrame.setVisible(false);
 					Fobj.dispose();
 				}
 			});
